@@ -24,14 +24,12 @@ def api_post(cookies, url, data, verify=False, headers=agent_header, timeout=60)
 
     if r.status_code != 200: 
         return __handle_exception(rd=r.reason)
-
     return json.loads(r.text)
 # 申请提现请求
 def exec_draw_cash(cookies, limits=None):
     r = get_can_drawcash(cookies)
     if r.get('r') != 0:
         return r
-
     if r.get('is_tm') == 0:
         return dict(r=0, rd=r.get('tm_tip'))
     r = get_balance_info(cookies)
@@ -85,7 +83,6 @@ def get_speed_stat(cookies):
     except requests.exceptions.RequestException as e:
         __handle_exception(e=e)
         return [0] * 24
-
     if r.status_code != 200:
         __handle_exception(rd=r.reason)
         return [0] * 24
